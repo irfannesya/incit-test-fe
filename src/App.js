@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import '../'
+import SignIn from './components/Auth/SignIn';
+import SignUp from './components/Auth/SignUp';
 
-function App() {
+
+const App = () => {
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  const handleSignInClick = () => {
+    setShowSignIn(true);
+    setShowSignUp(false); // Tutup popup signup jika terbuka
+  };
+
+  const handleSignUpClick = () => {
+    setShowSignUp(true);
+    setShowSignIn(false); // Tutup popup signin jika terbuka
+  };
+
+  const handlePopupClose = () => {
+    setShowSignIn(false);
+    setShowSignUp(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Welcome to Register Page</h1>
+      <button onClick={handleSignInClick}>Login</button>
+      <button onClick={handleSignUpClick}>Register</button>
+
+      {showSignIn && <SignIn onClose={handlePopupClose} />}
+      {showSignUp && <SignUp onClose={handlePopupClose} />}
     </div>
   );
 }
