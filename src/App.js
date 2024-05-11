@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
 
@@ -24,14 +24,22 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome to Register Page</h1>
-      <button onClick={handleSignInClick}>Login</button>
-      <button onClick={handleSignUpClick}>Register</button>
+    <Router>
+      <div>
+        <h1>Welcome to Register Page</h1>
+        <button onClick={handleSignInClick}>Login</button>
+        <button onClick={handleSignUpClick}>Register</button>
 
-      {showSignIn && <SignIn onClose={handlePopupClose} />}
-      {showSignUp && <SignUp onClose={handlePopupClose} />}
-    </div>
+        {showSignIn && <SignIn onClose={handlePopupClose} />}
+        {showSignUp && <SignUp onClose={handlePopupClose} />}
+
+        <Switch>
+          <Route path="/profile">
+            <ProfileForm />
+          </Route>
+        </Switch>
+      </div>
+    </Router >
   );
 }
 

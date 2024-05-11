@@ -7,6 +7,8 @@ const SignIn = ({ onClose }) => {
     const handleSignIn = (e) => {
         e.preventDefault();
         console.log('Signing in with:', email, password);
+        alert('Berhasil login');
+        window.location.href = '/Profile'; // Pindah ke halaman profil setelah login
         onClose(); // Tutup popup setelah berhasil login
     };
 

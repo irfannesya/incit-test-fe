@@ -1,7 +1,4 @@
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
 /* Popup style */
 .popup-container {
   position: fixed;
@@ -45,4 +42,3 @@
 .form-group button:hover {
   background-color: #0056b3;
 }
-

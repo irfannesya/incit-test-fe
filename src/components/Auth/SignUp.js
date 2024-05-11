@@ -1,16 +1,43 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios untuk melakukan HTTP request
+import { useHistory } from 'react-router-dom';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        // Logic to handle sign up
-        console.log('Signing up with:', email, password);
+
+        // Validasi password
+        if (password !== confirmPassword) {
+            alert('Password dan konfirmasi password harus sama');
+            return;
+        }
+
+        try {
+            // Kirim data pengguna ke backend
+            const response = await axios.post('http://localhost:5000/api/auth/register', {
+                email,
+                name,
+                password,
+            });
+
+            // Handle respon dari backend
+            console.log('Response from backend:', response.data);
+            alert('Berhasil mendaftar');
+            // Setelah berhasil mendaftar, redirect ke halaman profil
+            window.location.href = 'SignIn';
+            console.log(ErrorEvent);
+        } catch (error) {
+            // Tangani error jika terjadi kesalahan
+            console.error('Error during sign up:', error);
+            alert('Email sudah di gunakan atau password tidak sama ');
+        }
     };
 
     const togglePasswordVisibility = () => {
@@ -34,6 +61,16 @@ const SignUp = () => {
                         required
                     />
                 </div>
+                <div>
+                    <label>name:</label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+
                 <div>
                     <label>Password:</label>
                     <input
