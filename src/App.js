@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
+import Dashboard from './components/Auth/Dashboard';
 
 
 const App = () => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSignInClick = () => {
     setShowSignIn(true);
@@ -23,6 +25,12 @@ const App = () => {
     setShowSignUp(false);
   };
 
+  const handleSignOutClick = () => {
+    // Tambahkan logika untuk logout di sini
+    setIsLoggedIn(false);
+  };
+
+
   return (
     <Router>
       <div>
@@ -32,9 +40,17 @@ const App = () => {
 
         {showSignIn && <SignIn onClose={handlePopupClose} />}
         {showSignUp && <SignUp onClose={handlePopupClose} />}
-
-        
       </div>
+
+      <Routes>
+        <Route path="/signin" element={<SignIn onSignIn={handleSignInClick} />} />
+        <Route path="/signup" element={<SignUp />} />
+        {isLoggedIn ? (
+          <Route path="/dashboard" element={<Dashboard onSignOut={handleSignOutClick} />} />
+        ) : (
+          <Route path="/dashboard" element={<Navigate to="/dashboard" />} />
+        )}
+      </Routes>
     </Router >
   );
 }
